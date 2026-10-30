@@ -140,7 +140,84 @@ Esto afecta a la autoría de los commits nuevos de esta copia, no a tu correo de
 
 ## 8. Registro de publicación
 
-La publicación está autorizada por el usuario. Este apartado se completará con los comandos realmente ejecutados, el commit remoto y el resultado de Pages. La revisión local y la configuración de Pages son hechos diferentes de una web servida correctamente.
+La publicación fue autorizada expresamente por el usuario. Se ejecutaron estos comandos desde el workspace:
+
+```bash
+git -C mapa_fpe_valencia branch -m main
+git -C mapa_fpe_valencia add index.html assets reference docs README.md .nojekyll
+git -C mapa_fpe_valencia diff --cached --check
+git -C mapa_fpe_valencia diff --cached --stat
+git -C mapa_fpe_valencia diff --cached --name-only
+git -C mapa_fpe_valencia commit -m 'Preparar mapa docente con comunidad y apoyo voluntario'
+git -C mapa_fpe_valencia rev-parse HEAD
+git -C mapa_fpe_valencia ls-remote --heads origin
+git -C mapa_fpe_valencia push -u origin main
+```
+
+`branch -m` renombró la rama local a `main` para que coincidiera con la publicada y simplificar futuros `git push`. `add` preparó únicamente los archivos de la web y su documentación, sin el original privado ni evidencias del workspace. `diff --cached` revisó exactamente los 11 archivos preparados. El primer commit fue `4fc1ec911bf41533d074b127bd604c07dfda93cb`. La nueva consulta de ramas seguía vacía. `push -u origin main` creó `main` en GitHub y configuró su seguimiento local: la salida confirmó `[new branch] main -> main`. No se usó force.
+
+Se comprobó el identificador remoto y se activó Pages con GitHub CLI:
+
+```bash
+gh api repos/Splurtch/mapa_fpe_valencia/git/ref/heads/main --jq .object.sha
+gh api --method POST repos/Splurtch/mapa_fpe_valencia/pages --input /tmp/mapa-pages.json
+```
+
+`gh api` utiliza la cuenta ya conectada, sin poner el token en el comando. La primera consulta devolvió el mismo SHA completo. La segunda envió un archivo JSON temporal creado con este contenido, sin credenciales:
+
+```json
+{"build_type":"legacy","source":{"branch":"main","path":"/"}}
+```
+
+`POST` creó la configuración de Pages. `legacy` es el nombre de la opción de publicar desde una rama; el valor no significa que se haya creado una aplicación antigua. `main` es la rama fuente y `/` la carpeta raíz. La respuesta confirmó `public: true`, `https_enforced: true` y la URL:
+
+**https://splurtch.github.io/mapa_fpe_valencia/**
+
+No se utilizó la interfaz gráfica de Settings para activar este proyecto: se utilizó la API oficial mediante `gh`. No hubo cambios de DNS ni dominio propio. Los pasos de interfaz del apartado 10 son una alternativa equivalente para aprender, no una acción realizada en esta sesión.
+
+La primera respuesta tenía `status: null`; solo acreditaba la configuración. Se consultaron después el sitio, el build y las ejecuciones:
+
+```bash
+gh api repos/Splurtch/mapa_fpe_valencia/pages --jq '{status,html_url,build_type,source,https_enforced}'
+gh api repos/Splurtch/mapa_fpe_valencia/pages/builds/latest --jq '{status,commit,error,created_at,updated_at}'
+gh api repos/Splurtch/mapa_fpe_valencia/actions/runs --jq '.workflow_runs[:3] | map({id,name,head_sha,status,conclusion,html_url})'
+```
+
+Son consultas de lectura. El primer build devolvió `status: built`, commit `4fc1ec911bf41533d074b127bd604c07dfda93cb` y error nulo. La ejecución [pages build and deployment, 41076177611](https://github.com/Splurtch/mapa_fpe_valencia/actions/runs/41076177611) terminó con `conclusion: success`. Mientras figure pendiente o en curso hay que esperar.
+
+Se ejecutó esta petición de lectura:
+
+```bash
+curl --fail --silent --show-error --location --max-time 30 --output /tmp/mapa-pages-primer-index.html --write-out 'HTTP %{http_code}\nURL %{url_effective}\n' 'https://splurtch.github.io/mapa_fpe_valencia/'
+```
+
+Respondió HTTP 200. Un script Python comparó los bytes descargados con `git show 4fc1ec911bf41533d074b127bd604c07dfda93cb:index.html`: eran idénticos. Esto vincula la respuesta pública al archivo versionado y añade evidencia al estado del build.
+
+A partir de la URL devuelta por GitHub se añadieron la URL canónica y `og:url` en el HTML; no se inventó un dominio antes de confirmar la configuración. Se preparó una segunda versión con esos metadatos y este registro completo. Las pruebas finales de navegador se realizan sobre la URL pública usando la misma batería que en local, y se guardan en `../evidence/public/`. Cada publicación debe comprobarse por su propio commit; el primer build correcto no demuestra un segundo despliegue.
+
+Se ejecutó la batería contra la primera versión pública con esta orden (rutas de las herramientas instaladas en este equipo):
+
+```bash
+MAPA_URL=https://splurtch.github.io/mapa_fpe_valencia/ \
+PLAYWRIGHT_MODULE=/home/digitalsynapse/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright \
+CHROMIUM_EXECUTABLE=/home/digitalsynapse/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell \
+node evidence/run-browser.cjs
+```
+
+Terminó con código 0: las seis combinaciones de anchura/tema y las comprobaciones de teclado, copia e impresión pasaron. Se revisaron las capturas públicas. Para otro equipo hay que localizar sus herramientas o instalar Playwright como dependencia de pruebas; no copiar rutas de caché que no existan.
+
+La actualización de documentación y URL canónica se guarda con esta secuencia; el envío es normal y puede disparar otro despliegue:
+
+```bash
+git -C mapa_fpe_valencia diff --check
+git -C mapa_fpe_valencia add index.html README.md docs
+git -C mapa_fpe_valencia diff --cached --check
+git -C mapa_fpe_valencia diff --cached --stat
+git -C mapa_fpe_valencia commit -m 'Documentar publicación y añadir URL canónica de Pages'
+git -C mapa_fpe_valencia push
+```
+
+Para verificar esa versión se repiten las consultas de build y SHA anteriores. Además, `python3 /tmp/verify-public-mapa.py` es el script temporal de esta sesión que compara por HTTPS los bytes de `index.html`, CSS y ambos JS con los archivos locales, guarda sus huellas SHA-256 y comprueba la URL canónica. No es un requisito de despliegue ni un archivo del sitio. El registro final con el SHA resultante queda en `../evidence/RESULTADO_PUBLICACION.md` para acompañar este manual: no se incorpora el SHA del propio commit dentro de sí mismo, porque cambiaría su identificador.
 
 ## 9. Problemas reales y cómo se resolvieron
 

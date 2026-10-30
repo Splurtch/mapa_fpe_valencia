@@ -45,9 +45,9 @@ La fuente original está fechada el 30/10/2026. Esta preparación conserva sus 8
 
 Hay un correo nominativo omitido hasta confirmar su finalidad pública; la ficha conserva sus portales de empleo. El usuario confirmó la dirección pública del aula: https://tan-peafowl-110712.hostingersite.com . Se integra como «Entrar al aula de práctica». No se han trasladado cuentas, datos de alumnado ni soluciones del aula.
 
-## Publicación prevista
+## Publicación
 
-Destino: https://github.com/Splurtch/mapa_fpe_valencia . Rutas relativas compatibles con el subdirectorio `/mapa_fpe_valencia/` de GitHub Pages. La publicación ha sido autorizada; su resultado y comprobaciones se registran en el [manual paso a paso](docs/MANUAL_PASO_A_PASO.md).
+Web: https://splurtch.github.io/mapa_fpe_valencia/ · Repositorio: https://github.com/Splurtch/mapa_fpe_valencia . GitHub Pages publica desde `main` y la carpeta raíz. Las rutas relativas son compatibles con el subdirectorio `/mapa_fpe_valencia/`. El primer despliegue está comprobado por build y HTTP 200; el detalle y las comprobaciones de cada actualización se registran en el [manual paso a paso](docs/MANUAL_PASO_A_PASO.md).
 
 HTML/CSS/JS sencillos, sin backend ni framework. Google Fonts es una dependencia externa opcional; hay fuentes de sistema de reserva. Redes y café son enlaces normales y el mapa no carga el widget, cookies de pago ni analítica. El apoyo es voluntario y no condiciona el acceso.
 

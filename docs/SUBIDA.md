@@ -10,7 +10,7 @@ git diff --stat
 git diff
 ```
 
-`status` indica la rama y los archivos modificados; `diff --stat` resume el tamaño del cambio y `diff` permite leerlo. Esta copia usa una rama local `codex/comunidad-cafe`, sin commit. Las marcas de intención de añadir permiten ver los archivos nuevos en el diff; aún no están preparados para commit.
+`status` indica la rama y los archivos modificados; `diff --stat` resume el tamaño del cambio y `diff` permite leerlo. Durante la preparación se usó `codex/comunidad-cafe` sin commit y marcas de intención de añadir para ver los archivos nuevos en el diff. Al autorizar la publicación se renombró a `main`, se creó el commit y se subió normalmente; consulta el manual para el registro real.
 
 ```bash
 node --check assets/data.js
@@ -38,10 +38,10 @@ git add index.html assets reference docs README.md
 git diff --cached --stat
 git diff --cached
 git commit -m "Preparar mapa docente con comunidad y apoyo voluntario"
-git push -u origin HEAD:main
+git push -u origin main
 ```
 
-`add` prepara los archivos elegidos; no publica. `diff --cached` muestra exactamente lo que entrará en el commit. `commit` guarda una versión local con nombre e identificador; si falta identidad Git, configura tu nombre/correo para este repositorio antes de seguir. `push` es el primer paso que escribe en GitHub: crea `main` desde esta rama y la vincula para futuras sincronizaciones. Nunca usar `--force`.
+`add` prepara los archivos elegidos; no publica. `diff --cached` muestra exactamente lo que entrará en el commit. `commit` guarda una versión local con nombre e identificador; si falta identidad Git, configura tu nombre/correo para este repositorio antes de seguir. El ejemplo de push supone que la rama local ya se llama `main`, como se hizo durante esta publicación. `push` escribe en GitHub y vincula `main` para futuras sincronizaciones. Nunca usar `--force`.
 
 Después del push se espera ver los archivos en GitHub y el identificador del commit. Esto no significa que Pages esté activado. Su activación y la verificación de la URL pública son un paso posterior que requiere autorización; no se ha añadido un workflow que publique automáticamente.
 
