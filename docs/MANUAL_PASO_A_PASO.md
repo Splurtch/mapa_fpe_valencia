@@ -272,3 +272,58 @@ Si ya publicaste una versión incorrecta, `git log --oneline` permite localizar 
 Las evidencias locales quedan en `../evidence/`; no se publican con el sitio. La procedencia editorial está en `PROCEDENCIA.md`. El detalle de la subida se mantendrá en este manual y en `SUBIDA.md`.
 
 Documentación oficial consultada: https://docs.github.com/en/rest/pages/pages#create-a-github-pages-site . Ninguna prueba técnica sustituye la comprobación de la vigencia del contenido docente.
+
+## 13. Continuación solicitada: el widget oficial de café
+
+Tras ver el mapa publicado, el usuario pidió el widget que ya existe en el aula. Este cambio sustituye la decisión inicial de usar solo un enlace: **se mantiene el enlace y se añade el widget oficial**.
+
+Antes de editar se ejecutaron `git -C mapa_fpe_valencia status --short --branch` y `git -C mapa_fpe_valencia fetch origin`. La copia estaba limpia y `origin/main` seguía en `febb2911ee344e4b5cc6231b586cb0cab22dbae0`; no había cambios ajenos que integrar. `fetch` descarga referencias, sin sobrescribir el trabajo local.
+
+Se releyeron la configuración y los archivos reales del aula que enumera `PROCEDENCIA.md`. Se verificó el script remoto con:
+
+```bash
+curl --fail --silent --show-error --location --max-time 30 'https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js' -o /tmp/mapa-widget-oficial.js
+openssl dgst -sha384 -binary /tmp/mapa-widget-oficial.js | openssl base64 -A
+```
+
+`openssl dgst` calcula la huella SHA-384; `-binary` produce sus bytes y `base64 -A` los convierte al formato que usa el atributo `integrity`. La salida coincide con la configuración del aula. Si no coincidiera, habría que revisar el cambio del proveedor antes de aceptar otros bytes.
+
+Se añadió en `index.html` la etiqueta oficial con `data-name="BMC-Widget"`, perfil `DigitalSynapse`, color `#BD5FFF`, posición derecha y márgenes de 18 px; `defer` permite inicializar antes de `DOMContentLoaded` sin bloquear el análisis del HTML. `integrity` y `crossorigin="anonymous"` fijan el archivo inspeccionado. Se añade una sola etiqueta: copiarla dos veces puede duplicar el control.
+
+El nuevo `assets/bmc-accessibility.js` adapta el control exterior a teclado, foco y cierre. `#mapa-page` agrupa el contenido para dejarlo inerte mientras el panel está abierto; al cerrar se recuperan interacción y foco. CSS limita el iframe al ancho y alto disponibles y reserva espacio para cerrar. En móvil se evita la burbuja inicial larga; el texto sigue en la sección de apoyo. El flotante se oculta temporalmente si coincide con un enlace, filtro, búsqueda o botón del mapa, y vuelve cuando queda libre.
+
+Durante la prueba se detectó que la transición `all` del proveedor retrasaba la ocultación del flotante frente a un filtro. Se limitó esa transición a la transformación, conservando la ocultación inmediata. El código remoto no se modificó.
+
+**Dependencia externa:** el script utiliza una cookie `visited` para el mensaje inicial y abre un iframe del proveedor. No se le añaden fichas ni datos del aula. La integridad protege los bytes del script inicial, no congela todo el contenido futuro del iframe. Si el CDN falla o la integridad deja de coincidir, el enlace «Invítame a un café» sigue abriendo la página de apoyo. No se incorporan claves ni se realizan pagos durante las comprobaciones.
+
+Se añadió una prueba de navegador fuera de la carpeta publicada: `evidence/widget.cjs`. Primero falló por ausencia del widget; después se comprobó la integración con el script oficial sin modificar. El iframe se sustituyó por contenido sintético, evitando operaciones de pago. La prueba recorre seis combinaciones de ancho/tema, apertura, cierre, Enter/Espacio/Escape, recuperación del foco, filtros, solapamientos y proveedor bloqueado. También abre el widget con el script servido por el CDN real; solo se sustituye el iframe. Se comprueban errores JavaScript no controlados y movimiento reducido.
+
+Orden ejecutada (con las herramientas instaladas descritas antes):
+
+```bash
+PLAYWRIGHT_MODULE=/home/digitalsynapse/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright \
+CHROMIUM_EXECUTABLE=/home/digitalsynapse/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell \
+node evidence/widget.cjs
+```
+
+Se repite sobre la web publicada añadiendo `MAPA_URL=https://splurtch.github.io/mapa_fpe_valencia/`. La evidencia queda en `evidence/widget-local/` y `evidence/widget-public/`. Las pruebas habituales del mapa también se repiten para detectar regresiones; no verifican la vigencia de todas las fichas.
+
+Para otro proyecto, toma una configuración pública confirmada de tu propio perfil, comprueba el script oficial, añádelo una sola vez antes del evento de inicialización, conserva un enlace directo, adapta espacio/foco al sitio y prueba móvil antes de publicar. No copies el perfil de DigitalSynapse en una web ajena. Si el proyecto exige una política de terceros distinta, decide cómo cargar el widget dentro de esa política.
+
+## 14. README con el patrón de los proyectos de referencia
+
+El usuario pidió el estilo de `destiny-web`, `design-vault` y `tpv-restaurante-demo`. Se leyeron sus README reales de `main` con el conector GitHub. `PROCEDENCIA.md` registra los SHA de los archivos. Los dos primeros comparten cabecera, frase de propósito, badges, enlaces, captura, presentación en un minuto, arquitectura, stack, estructura y comandos. El de TPV aporta un énfasis claro en estado, alcance y límites.
+
+Se reescribió `README.md` con ese patrón y una captura propia del mapa. Se describen HTML/CSS/JavaScript y Pages, sin copiar React, bases de datos, licencias ni funciones de las referencias. Los comandos de uso siguen siendo los reales del mapa y sus enlaces apuntan a archivos existentes. La captura se genera al abrir el mapa local con el widget y se guarda en `docs/img/mapa-desktop.png`.
+
+Para preparar esta continuación se usan comprobaciones de sintaxis de los tres JS y `git diff --check`. Tras revisar los archivos se guarda y publica con:
+
+```bash
+git -C mapa_fpe_valencia add index.html assets README.md docs
+git -C mapa_fpe_valencia diff --cached --check
+git -C mapa_fpe_valencia diff --cached --stat
+git -C mapa_fpe_valencia commit -m 'Añadir widget oficial de café y alinear README'
+git -C mapa_fpe_valencia push
+```
+
+El push normal vuelve a disparar Pages. La comprobación del SHA remoto, build, recursos HTTPS y navegador público sigue el apartado 8. El resultado final de esta continuación acompaña al manual como registro de entrega para no introducir el SHA de un commit dentro de su propio contenido.

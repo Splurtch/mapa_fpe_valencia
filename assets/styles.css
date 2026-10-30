@@ -131,3 +131,15 @@ section{scroll-margin-top:85px}
 .skip-link:focus{transform:none}
 @media(max-width:420px){.pillnav .brand{font-size:11px;padding:4px 6px}.pillnav a{font-size:11px;padding:8px}.hero{padding-top:100px}.term{font-size:11px}.wrap{padding-left:16px;padding-right:16px}.card{padding:15px}.community .support-card{padding:18px}}
 @media print{.navwrap,.tools,.cp,.cursor,.skip-link{display:none}section{padding:20px 0}.hero{margin:0;padding:30px 0}.card{break-inside:avoid}.grid,.sec{display:block}.card{margin-bottom:12px}}
+
+/* Control oficial de café: solo se adapta el exterior, nunca su iframe. */
+#bmc-wbtn{border:1px solid #06b6d4!important;box-shadow:0 6px 24px #0005!important;bottom:max(18px,env(safe-area-inset-bottom))!important;transition-property:transform!important}
+#bmc-wbtn:focus-visible,#bmc-close-btn:focus-visible{outline:3px solid var(--accent)!important;outline-offset:4px}
+[data-ds-bmc-message]{background:var(--surface)!important;color:var(--ink)!important;border:1px solid var(--border-strong)!important;border-radius:14px!important;font:14px/1.6 var(--sans)!important;max-width:min(280px,calc(100vw - 112px))!important;max-height:calc(100dvh - 110px)!important;overflow:auto!important;white-space:pre-line}
+[data-ds-bmc-layer][data-ds-open="true"]{background:rgba(0,0,0,.35)!important}
+#bmc-iframe{width:min(420px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;right:16px!important;left:auto!important;top:64px!important;bottom:auto!important;min-height:calc(100dvh - 80px)!important;max-height:calc(100dvh - 80px)!important}
+[data-ds-bmc-layer][data-ds-open="true"] #bmc-close-btn{background:#fff!important;border:1px solid #94a3b8!important;top:12px!important;right:16px!important;width:44px!important;height:44px!important}
+footer{padding-bottom:112px}
+@media(max-width:640px){[data-ds-bmc-message]{display:none!important}}
+@media(prefers-reduced-motion:reduce){#bmc-wbtn,#bmc-iframe,[data-ds-bmc-message]{transition:none!important;animation:none!important}}
+@media print{#bmc-wbtn,#bmc-iframe,[data-ds-bmc-layer],[data-ds-bmc-message]{display:none!important}}

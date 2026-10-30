@@ -38,7 +38,7 @@ Se añade una frase contextual: el apoyo voluntario ayuda a este mapa y otros pr
 
 - HTML normalizado: `lang="es"`, título y fuentes dentro de `head`, descripción y metadatos de compartir. Sin URL canónica inventada antes de publicar.
 - CSS, datos y comportamiento en archivos separados; rutas relativas y sin compilación.
-- Comunidad y apoyo al final; acceso desde la navegación. Sin widget ni scripts de pago.
+- Comunidad y apoyo al final; acceso desde la navegación. La primera publicación usaba solo enlaces. Tras la revisión del usuario se añade el widget oficial descrito más abajo, conservando el enlace directo.
 - Cuadrículas que se ajustan a pantallas estrechas, ajuste de palabras largas, foco visible y salto al contenido.
 - Búsqueda tolerante a tildes, contadores anunciados y aviso explícito si falla la copia.
 - Referencias personales neutralizadas en Adams, Hedima, Impulso06, AFS Tenerife, Nascor y AR Formación; sin añadir destinos o verificaciones.
@@ -54,3 +54,21 @@ Se añade una frase contextual: el apoyo voluntario ayuda a este mapa y otros pr
 La URL pública del aula ya está confirmada por el usuario e integrada con el texto «Entrar al aula de práctica». La comprobación pública se limita a cargar su pantalla de acceso, sin iniciar sesión ni enviar formularios.
 
 Repositorio destino comprobado por el conector GitHub: público, rama predeterminada `main`, tamaño 0 KB y lista de ramas vacía durante esta preparación. Se debe volver a comprobar antes de subir para no pisar trabajo nuevo.
+
+## Continuación: widget oficial y README
+
+El usuario pidió expresamente incorporar el widget que ya tiene el aula. Se releyeron en `main` sus archivos `web/bmc-tags.mjs`, `web/public/bmc-accessibility.js`, `web/src/support.css`, `web/tests/coffee.spec.ts` y `content/support.json`, dentro de `011_PLATAFORMA_PRACTICA`. El script oficial se descarga de `https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js`; sus bytes coinciden con la integridad `sha384-Ix5rVKHOmV5CEwVkvVF0OJsmX53F8y01q+sE3+b41ZLmPZWgufB7atrf9pwA7r1e` del aula.
+
+El mapa lo carga una sola vez con `defer`, CORS anónimo, perfil DigitalSynapse, color `#BD5FFF`, posición derecha y márgenes de 18 px. Se conserva el copy y la URL directa. El adaptador local procede del control exterior del aula y se ajusta al mapa: teclado, cierre, foco, fondo inerte al abrir, tamaño del panel y ocultación temporal si el flotante coincide con controles. La burbuja inicial se oculta en móvil; el copy completo permanece en la sección de apoyo.
+
+El proveedor utiliza una cookie `visited` y carga recursos externos. Su iframe conserva su funcionamiento y diseño; no se modifica su contenido. No se añaden datos de las fichas ni del aula a su URL. Los ensayos sustituyen solo el iframe por contenido sintético para evitar pagos; también se comprueba la carga del script real desde su CDN.
+
+Referencias de README leídas en `main`, sin trasladar datos ni capacidades de esos proyectos:
+
+| Repositorio | SHA del archivo README.md consultado | Patrón utilizado |
+|---|---|---|
+| `Splurtch/destiny-web` | `7a92b8011f480893ed3f79ce9f2b15c2adc0d1f2` | Cabecera centrada, enlaces útiles, captura, proyecto en un minuto, arquitectura, stack y estructura |
+| `Splurtch/design-vault` | `c5dac628a8d41f82983222b7185bf3f375cb01f8` | Secciones numeradas, comandos por intención y tabla «Dónde seguir leyendo» |
+| `Splurtch/tpv-restaurante-demo` | `78b40f29acd46315e115a7fd235fe3060358082e` | Estado factual, límites y trazabilidad de lo que existe |
+
+Se usa una captura propia del mapa; no se copian imágenes, métricas ni licencias de esos repositorios.
