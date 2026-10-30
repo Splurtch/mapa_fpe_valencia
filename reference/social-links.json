@@ -1,0 +1,27 @@
+[
+  {
+    "label": "LinkedIn",
+    "icon": "linkedin",
+    "url": "https://www.linkedin.com/company/digitalsynapse/"
+  },
+  {
+    "label": "WhatsApp",
+    "icon": "whatsapp",
+    "url": "https://chat.whatsapp.com/BkoO2dAdeqCDjn0N6MUJx2"
+  },
+  {
+    "label": "Substack",
+    "icon": "substack",
+    "url": "https://substack.com/@synji"
+  },
+  {
+    "label": "X",
+    "icon": "twitter-x",
+    "url": "https://x.com/digitalsynaps"
+  },
+  {
+    "label": "Web",
+    "icon": "web",
+    "url": "https://digitalsynapse.es"
+  }
+]

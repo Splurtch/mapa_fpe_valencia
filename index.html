@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mapa Docente DigitalSynapse · Centros y vías para enseñar</title>
+<meta name="description" content="Guía de centros de formación y vías para la docencia en Alicante, Valencia y otras zonas. Busca, filtra y consulta los canales de contacto.">
+<meta property="og:title" content="Mapa Docente DigitalSynapse">
+<meta property="og:description" content="Centros de formación, canales de contacto y orientación docente en la Comunitat Valenciana.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="./assets/styles.css">
+<script src="./assets/data.js" defer></script>
+<script src="./assets/app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<noscript><p>Activa JavaScript para buscar y consultar las fichas de centros. La orientación y los enlaces de comunidad siguen disponibles.</p></noscript>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="dsg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3B82F6"/><stop offset="50%" stop-color="#8B5CF6"/><stop offset="100%" stop-color="#06B6D4"/></linearGradient>
+  <symbol id="dslogo" viewBox="0 0 32 32" fill="none"><path d="M6 10L16 4L26 10L6 22L16 28L26 22" stroke="url(#dsg)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="10" r="3.5" fill="#3B82F6"/><circle cx="16" cy="16" r="3.5" fill="#8B5CF6"/><circle cx="26" cy="22" r="3.5" fill="#06B6D4"/></symbol>
+</defs></svg>
+
+<div class="navwrap"><nav class="pillnav" aria-label="Secciones">
+  <span class="brand"><svg aria-hidden="true"><use href="#dslogo"/></svg>DigitalSynapse</span>
+  <a href="#centros" class="always">Centros</a>
+  <a href="#valencia" class="always">Comunitat Valenciana</a>
+  <a href="#pasos">Pasos</a>
+  <a href="#comunidad">Comunidad y café</a>
+</nav></div>
+
+<header class="hero"><div class="wrap hero-inner">
+  <div class="term">
+    <div class="l1">$ mapa-docente --zona "Comunitat Valenciana" --rol docente-FPE</div>
+    <div class="l2">&gt; centros localizados, webs de empleo, correos y teléfonos…</div>
+    <div class="l3">&gt; RESULTADO: <b id="hn">0</b> centros · <b id="hv">0</b> con web de empleo o correo<span class="cursor"></span></div>
+  </div>
+  <h1>Dónde enviar tu CV como <em>docente de formación</em></h1>
+  <p class="lede">Centros de formación de Alicante, Valencia y otras zonas, con su página de empleo, correo y teléfono cuando existen, y las vías públicas y privadas para formar como autónomo en la Comunitat Valenciana.</p>
+  <p class="sig">DigitalSynapse · Sin humo: diagnóstico, entregables y seguimiento hasta el cierre. · Hecho en Alicante. Fuente original fechada el 30/10/2026; vigencia pendiente de revisión.</p>
+  <div class="stat-strip">
+    <div class="s"><div class="v" id="s1">0</div><div class="k">centros en la guía</div></div>
+    <div class="s"><div class="v" id="s2">0</div><div class="k">en Alicante</div></div>
+    <div class="s"><div class="v" id="s3">0</div><div class="k">en Valencia</div></div>
+    <div class="s"><div class="v" id="s4">0</div><div class="k">marcados como verificados en origen</div></div>
+  </div>
+</div></header>
+
+<main class="wrap" id="contenido">
+<section id="centros">
+  <div class="chapter-head"><span class="idx">01</span><h2>Centros de formación</h2></div>
+  <p class="section-intro">Fichas con web, página de “trabaja con nosotros”, correo y teléfono. Las etiquetas reflejan la revisión de la fuente original, no una nueva comprobación. No acreditan al centro ni garantizan vacantes vigentes. Los centros nuevos de Alicante y Valencia vienen de directorios públicos y <b>aún tienen pendiente el dato de contacto directo</b>.</p>
+  <div class="legend">
+    <span><span class="badge b-ok">Verificado</span> leído en la web oficial</span>
+    <span><span class="badge b-part">Parcial</span> falta correo o página de empleo</span>
+    <span><span class="badge b-none">Sin datos</span> localizado, falta contacto</span>
+  </div>
+  <div class="tools">
+    <input type="search" id="q" placeholder="Buscar centro, ciudad, correo…" aria-label="Buscar">
+    <button class="chip" data-z="A" aria-pressed="false">Alicante</button>
+    <button class="chip" data-z="V" aria-pressed="false">Valencia</button>
+    <button class="chip" data-z="O" aria-pressed="false">Otras zonas</button>
+    <span class="sep"></span>
+    <button class="chip" data-f="ok" aria-pressed="false">Verificado</button>
+    <button class="chip" data-f="part" aria-pressed="false">Parcial</button>
+    <button class="chip" data-f="none" aria-pressed="false">Sin datos</button>
+  </div>
+  <div class="count" id="count" role="status" aria-live="polite"></div>
+  <p id="copy-status" role="status" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="valencia">
+  <div class="chapter-head"><span class="idx">02</span><h2>Formar como autónomo en la Comunitat Valenciana</h2></div>
+  <p class="section-intro">Vías públicas y privadas. La fuente original marca como <b>Verificado</b> lo recogido en documentos oficiales. Los importes, requisitos y plazos son referencias históricas: comprueba las bases vigentes antes de presentar una candidatura; lo marcado como <b>General</b> es conocimiento común que debes confirmar en la web de cada organismo.</p>
+  <div class="h3s">Administración pública</div>
+  <div class="sec" id="pub"></div>
+  <div class="h3s">Sector privado</div>
+  <div class="sec" id="priv"></div>
+</section>
+
+<section id="pasos">
+  <div class="chapter-head"><span class="idx">03</span><h2>Pasos para empezar</h2></div>
+  <ol class="steps">
+    <li>Ten a mano el SSCE0110 (o la titulación y experiencia que lo sustituyan), la titulación de cada especialidad y la acreditación de experiencia.</li>
+    <li>Revisa cada pocos meses las licitaciones y homologaciones de las cámaras y las agencias locales.</li>
+    <li>Envía el CV a los centros acreditados de tu zona y pide entrar en su bolsa de docentes de teleformación y presencial.</li>
+  </ol>
+</section>
+<section id="comunidad" class="community" aria-labelledby="comunidad-titulo">
+  <div class="chapter-head"><span class="idx">04</span><h2 id="comunidad-titulo">Seguimos aprendiendo</h2></div>
+  <p>Este mapa es un recurso vivo para docentes y futuros docentes. Comparte experiencias, sigue los proyectos de DigitalSynapse y ayuda a que la información siga siendo útil.</p>
+  <p><a class="aula-link" href="https://tan-peafowl-110712.hostingersite.com" target="_blank" rel="noopener noreferrer">Entrar al aula de práctica</a></p>
+  <nav class="social-links" aria-label="DigitalSynapse en la red"><a href="https://www.linkedin.com/company/digitalsynapse/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://chat.whatsapp.com/BkoO2dAdeqCDjn0N6MUJx2" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://substack.com/@synji" target="_blank" rel="noopener noreferrer">Substack</a><a href="https://x.com/digitalsynaps" target="_blank" rel="noopener noreferrer">X</a><a href="https://digitalsynapse.es" target="_blank" rel="noopener noreferrer">digitalsynapse.es</a></nav>
+  <div class="support-card">
+    <h3>¿Te está sirviendo este invento?</h3>
+    <p>El hosting no se paga con «qué guapo te ha quedado». Si quieres echar una mano para que siga dándole vida a estas herramientas, invítame a un café. Que la cafeína y los bugs tienen una relación bastante tóxica. ☕🤪</p>
+    <p>El apoyo es voluntario y ayuda a mantener este mapa y otros proyectos de DigitalSynapse. El contenido está disponible para todo el mundo.</p>
+    <a class="coffee-link" href="https://www.buymeacoffee.com/DigitalSynapse" target="_blank" rel="noopener noreferrer">Invítame a un café</a>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <div class="fl"><svg aria-hidden="true"><use href="#dslogo"/></svg>DigitalSynapse</div>
+  <p>Los centros “Sin datos” aparecen en directorios públicos (Educaweb, Academias.com) pero no se pudo leer su web: varios sitios bloquean la lectura automática o están caídos. Comprueba el dato antes de enviar el CV.</p>
+  <p style="margin-top:10px"><b>Fuentes</b></p>
+  <ul>
+    <li><a href="https://camaravalencia.com/wp-content/uploads/2024/10/A.M.-329-2024-PLIEGO-DE-PRESCRIPCIONES-TECNICAS-ACUERDO-MARCO-DE-HOMOLOGACION-FORMACION-PICE-2025-1.pdf">Cámara de Valencia, pliego PICE 2025</a></li>
+    <li><a href="https://www.camaralicante.com/wp-content/uploads/2026/01/pliego-tecnico-troncal-26.pdf">Cámara de Alicante, pliego técnico 2026</a></li>
+    <li><a href="https://www.impulsalicante.es/wp-content/uploads/2026/03/Licitacion-gestion-y-docencia-Alfabetizacion-digital.pdf">Impulsa Alicante, licitación de docencia 2026</a></li>
+    <li><a href="https://www.educaweb.com/certificados-profesionalidad/alicante/">Educaweb, certificados de profesionalidad en Alicante</a></li>
+    <li><a href="https://www.educaweb.com/centros/educacion-formacion/formacion-formadores/institutos-escuelas-fp/valencia/">Educaweb, formación de formadores en Valencia</a></li>
+    <li><a href="https://www.academias.com/academias/certificados-de-profesionalidad/alicante">Academias.com, Alicante</a> · <a href="https://www.academias.com/academias/certificados-de-profesionalidad/valencia">Valencia</a></li>
+    <li><a href="https://digitalsynapse.es">digitalsynapse.es</a> (marca) y webs oficiales de cada centro, enlazadas en las fichas.</li>
+  </ul>
+</div></footer>
+
+</body>
+</html>
